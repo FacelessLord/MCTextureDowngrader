@@ -6,13 +6,13 @@ def mirror_image(in_image, out_image) -> tuple[Image, Image]:
     return (ImageOps.mirror(in_image), ImageOps.mirror(out_image))
 
 def brighten_one(image: Image, factor):
-    rgb = image.convert('RGB')
+    rgb = image.convert('RGB', colors=8)
     alpha = image.split()[-1].convert('L')
 
     enhancer = ImageEnhance.Brightness(rgb)
     brightened_rgb = enhancer.enhance(factor)
 
-    return Image.merge('RGBA', (*brightened_rgb.split(), alpha))
+    return Image.merge('RGBA', (*brightened_rgb.split(), alpha)).convert('P')
 
 def create_lighten_images(factor):
     def lighten_images(in_image, out_image) -> tuple[Image, Image]:

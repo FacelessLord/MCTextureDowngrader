@@ -120,8 +120,8 @@ def move_and_populate_data(index, k, faith_check_dir, faith_dir, mc_check_dir, m
             id = id_holder.next()
             faith_dataset_path = os.path.join(faith_save_dir, f"_{id}.png")
             mc_dataset_path = os.path.join(mc_save_dir, f"_{id}.png")
-            faith_img.save(faith_dataset_path, bits=8)
-            mc_img.save(mc_dataset_path, bits=8)
+            faith_img.convert('RGBA', colors=8).convert('P').save(faith_dataset_path, format='PNG', bits=8)
+            mc_img.convert('RGBA', colors=8).convert('P').save(mc_dataset_path, format='PNG', bits=8)
 
             save_index[faith_dataset_path] = mc_dataset_path
         if id > check_data_start:

@@ -35,12 +35,12 @@ class ImageDataset(Dataset):
 
     def __getitem__(self, idx):
         # Load input image
-        input_img_path = os.path.join('data_collect', self.inputs[idx])
-        input_image = Image.open(input_img_path)
+        input_img_path = self.inputs[idx]
+        input_image = Image.open(input_img_path).convert('RGBA')
 
         # Load expected output image
-        expected_img_path = os.path.join('data_collect', self.expected[idx])
-        expected_image = Image.open(expected_img_path)
+        expected_img_path = self.expected[idx]
+        expected_image = Image.open(expected_img_path).convert('RGBA')
 
         # Apply transforms
         if self.transform:

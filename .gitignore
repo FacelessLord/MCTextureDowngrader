@@ -1,0 +1,9 @@
+/torch-2.7.0+cpu-cp312-cp312-win_amd64.whl
+/torchvision-0.22.0+cpu-cp312-cp312-win_amd64.whl
+/output/
+/input/
+/check_input/
+/check_output/
+/faithful/
+/mc/
+/.venv/

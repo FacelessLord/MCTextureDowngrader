@@ -4,7 +4,7 @@ import torch
 from PIL import Image
 from torchvision import transforms
 
-from model import DownsampleCNN_v2
+from model import DownsampleCNN_v2, UpsampleCNN
 
 def load_images():
     images = []
@@ -25,6 +25,12 @@ def manual_check():
     device = torch.device("hip" if torch.version.hip else "cpu")
     model = model.to(device)
     model.eval()
+    upsample_model = UpsampleCNN()
+    upsample_model.load_state_dict(
+        torch.load('best_upsample_model.pth', map_location=torch.device('cuda' if torch.cuda.is_available() else 'cpu')))
+    device = torch.device("hip" if torch.version.hip else "cpu")
+    upsample_model = upsample_model.to(device)
+    upsample_model.eval()
 
     images = load_images()
 
@@ -37,6 +43,7 @@ def manual_check():
         with torch.no_grad():
             # Get prediction
             output = model(image)
+            output = upsample_model(output)
 
             # Convert back to PIL image
             output_image = transforms.ToPILImage()(output.squeeze(0))
